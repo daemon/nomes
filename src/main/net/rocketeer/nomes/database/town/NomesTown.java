@@ -33,7 +33,7 @@ public class NomesTown {
   }
 
   private void syncTownData() {
-    cachedData(mDatabase.fetchOrCreateNomesTown(mTown.getUuid()));
+    cachedData(mDatabase.fetchOrCreateNomesTown(mTown.getUuid(), mTown.getName()));
   }
 
   public void fetchFlauntCount(Consumer<Integer> callback) {

@@ -16,6 +16,7 @@ import java.util.UUID;
 public class FlauntCommand implements CommandExecutor {
   private final TownyDataManager mManager;
   private final Map<UUID, Long> mLastUsed;
+  private final static long DELAY_MS = 10 * 60000;
 
   public FlauntCommand(TownyDataManager manager) {
     mManager = manager;
@@ -33,10 +34,15 @@ public class FlauntCommand implements CommandExecutor {
       return true;
     }
 
-    if (System.currentTimeMillis() - mLastUsed.getOrDefault(town.uuid(), 0L) < 60000) {
-      long waitMs = System.currentTimeMillis() - mLastUsed.getOrDefault(town.uuid(), 0L);
-      String lengthStr = String.valueOf(60 - (int) Math.ceil(waitMs / 1000.0)) + " seconds.";
-      player.sendMessage(ChatColor.RED + "Someone in your town has flaunted too recently! Please wait " + lengthStr);
+    if (System.currentTimeMillis() - mLastUsed.getOrDefault(town.uuid(), 0L) < DELAY_MS) {
+      long waitSecs = (DELAY_MS - (System.currentTimeMillis() - mLastUsed.getOrDefault(town.uuid(), 0L))) / 1000;
+      long seconds = waitSecs % 60;
+      long minutes = waitSecs / 60;
+      StringBuilder builder = new StringBuilder();
+      if (minutes > 0) builder.append(minutes).append(" minutes, ");
+      builder.append(seconds).append(" seconds.");
+      player.sendMessage(ChatColor.RED + "Someone in your town has flaunted too recently! Please wait " +
+          builder.toString());
       return true;
     }
     int points = (int) (Math.random() * 10 + 1);

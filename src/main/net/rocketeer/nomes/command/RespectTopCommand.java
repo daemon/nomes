@@ -23,7 +23,7 @@ public class RespectTopCommand implements CommandExecutor {
       }
       int i = 1;
       for (NomesTown town : towns) {
-        sender.sendMessage(makeMessage(i, town.townName(), town.cachedData().flauntCount()));
+        sender.sendMessage(makeMessage(i, town.cachedData().name(), town.cachedData().flauntCount()));
         ++i;
       }
     });

@@ -94,17 +94,18 @@ public class NomesDatabase {
     } catch (Exception ignored) {}
   }
 
-  public NomesTownData fetchOrCreateNomesTown(UUID townUuid) {
+  public NomesTownData fetchOrCreateNomesTown(UUID townUuid, String name) {
     try (Connection connection = mManager.getConnection();
          PreparedStatement selStmt = connection.prepareStatement("SELECT * FROM nomes_towns WHERE uuid=?");
-         PreparedStatement insStmt = connection.prepareStatement("INSERT INTO nomes_towns (uuid) VALUES (?)")) {
+         PreparedStatement insStmt = connection.prepareStatement("INSERT INTO nomes_towns (uuid, name) VALUES (?, ?)")) {
       selStmt.setString(1, townUuid.toString());
       ResultSet rs = selStmt.executeQuery();
       if (rs.next())
-        return new NomesTownData(townUuid, rs.getInt("n_flaunts"));
+        return new NomesTownData(townUuid, name, rs.getInt("n_flaunts"));
       insStmt.setString(1, townUuid.toString());
+      insStmt.setString(2, name);
       checkRows(insStmt.executeUpdate(), "Cannot create Nomes town!");
-      return new NomesTownData(townUuid,0);
+      return new NomesTownData(townUuid, name, 0);
     } catch (SQLException e) {
       e.printStackTrace();
     }
@@ -129,7 +130,7 @@ public class NomesDatabase {
       stmt.setInt(1, limit);
       ResultSet rs = stmt.executeQuery();
       while (rs.next())
-        townDataList.add(new NomesTownData(UUID.fromString(rs.getString("uuid")), rs.getInt("n_flaunts")));
+        townDataList.add(new NomesTownData(UUID.fromString(rs.getString("uuid")), rs.getString("name"), rs.getInt("n_flaunts")));
     } catch (SQLException e) {
       e.printStackTrace();
     }
