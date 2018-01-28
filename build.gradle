@@ -1,0 +1,62 @@
+apply plugin: 'idea'
+apply plugin: 'java'
+
+version = '0.0.1'
+
+repositories {
+    mavenCentral()
+    flatDir {
+       dirs 'libs'
+    }
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test']
+        }
+
+    }
+}
+
+configurations {
+    provided
+    compile.extendsFrom provided
+}
+
+task bukkitPlugin(type: Jar) {
+    baseName = 'nomes'
+    manifest {
+        attributes 'Implementation-Title': 'nomes',
+                   'Implementation-Version': version
+    }
+    from (sourceSets.main.output) {
+        include "net/rocketeer/nomes/**"
+    }
+    from ('src/main/resources') {
+        include "config.yml"
+        include "plugin.yml"
+        include "init.sql"
+    }
+    from {
+        (configurations.compile - configurations.provided).collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+dependencies {
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.+'
+    compile group: 'com.mchange', name: 'c3p0', version: '0.9.5.1'
+    provided name: 'spigot-1.11.2'
+    provided name: 'Towny'
+    provided group: 'com.google.code.gson', name: 'gson', version: '2.7'
+}
+
+buildDir = 'bin'
