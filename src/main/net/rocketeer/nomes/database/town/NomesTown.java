@@ -44,6 +44,9 @@ public class NomesTown {
   }
 
   public void incrementFlauntCount(int points) {
-    mDatabase.scheduleAsyncTask(() -> mDatabase.incrementFlauntCount(mTown.getUuid(), points));
+    mDatabase.scheduleAsyncTask(() -> {
+      syncTownData();
+      mDatabase.incrementFlauntCount(mTown.getUuid(), points);
+    });
   }
 }

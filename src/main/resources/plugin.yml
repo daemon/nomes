@@ -2,29 +2,3 @@ name: nomes
 main: net.rocketeer.nomes.NomesPlugin
 version: 0.0.1
 depend: [Towny]
-commands:
-  nhset:
-    description: Sets the home of your nation to your current location
-    usage: /nhset
-    permission: nomes.cmd.nhset
-    permission-message: You don't have permission to do this!
-  nhtp:
-    description: Teleports to the home of your nation
-    usage: /nhtp
-    permission: nomes.cmd.nhtp
-    permission-message: You don't have permission to do this!
-  tflaunt:
-    description: Flaunts your town
-    usage: /tflaunt
-    permission: nomes.cmd.tflaunt
-    permission-message: You don't have permission to do this!
-  tcower:
-    description: Deprecates your town
-    usage: /tcower
-    permission: nomes.cmd.tcower
-    permission-message: You don't have permission to do this!
-  respecttop:
-    description: Most respected towns
-    usage: /respecttop
-    permission: nomes.cmd.flaunttop
-    permission-message: You don't have permission to do this!

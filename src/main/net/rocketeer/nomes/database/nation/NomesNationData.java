@@ -53,7 +53,7 @@ public class NomesNationData {
   }
 
   public Location location() {
-    return new Location(Bukkit.getWorld(UUID.fromString(mWorldUuid)), mX, mY, mZ, (float) mPitch, (float) mYaw);
+    return new Location(Bukkit.getWorld(UUID.fromString(mWorldUuid)), mX, mY, mZ, (float) mYaw, (float) mPitch);
   }
 
   public static NomesNationData fromBukkit(UUID nationUuid, Location location) {

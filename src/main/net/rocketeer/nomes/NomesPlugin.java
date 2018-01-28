@@ -35,10 +35,6 @@ public class NomesPlugin extends JavaPlugin {
     manager.initDatabase();
     NomesDatabase nomesDb = new NomesDatabase(this, manager);
     TownyDataManager townMan = new TownyDataManager(nomesDb);
-    Bukkit.getPluginCommand("tcower").setExecutor(new CowerCommand(townMan));
-    Bukkit.getPluginCommand("tflaunt").setExecutor(new FlauntCommand(townMan));
-    Bukkit.getPluginCommand("nhtp").setExecutor(new NationTeleportCommand(townMan));
-    Bukkit.getPluginCommand("nhset").setExecutor(new NationSetHomeCommand(townMan));
-    Bukkit.getPluginCommand("respecttop").setExecutor(new RespectTopCommand(townMan));
+    Bukkit.getPluginManager().registerEvents(new TownyPreprocessHook(this, townMan), this);
   }
 }

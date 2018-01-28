@@ -24,7 +24,7 @@ public class NationSetHomeCommand implements CommandExecutor {
       return true;
     }
     mManager.getNation(player).setSpawn(player.getLocation());
-    player.sendMessage(ChatColor.GOLD + "Nation spawn set! You and your constituents may now use /nhtp");
+    player.sendMessage(ChatColor.GOLD + "Nation spawn set! You and your constituents may now use /n spawn");
     return true;
   }
 }

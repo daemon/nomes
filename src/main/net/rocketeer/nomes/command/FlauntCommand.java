@@ -34,7 +34,8 @@ public class FlauntCommand implements CommandExecutor {
     }
 
     if (System.currentTimeMillis() - mLastUsed.getOrDefault(town.uuid(), 0L) < 60000) {
-      String lengthStr = String.valueOf(Math.ceil(mLastUsed.getOrDefault(town.uuid(), 0L) / 1000.0)) + " seconds.";
+      long waitMs = System.currentTimeMillis() - mLastUsed.getOrDefault(town.uuid(), 0L);
+      String lengthStr = String.valueOf(60 - (int) Math.ceil(waitMs / 1000.0)) + " seconds.";
       player.sendMessage(ChatColor.RED + "Someone in your town has flaunted too recently! Please wait " + lengthStr);
       return true;
     }
